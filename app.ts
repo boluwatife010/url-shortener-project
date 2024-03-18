@@ -7,6 +7,6 @@ app.use(bodyParser.json());
 app.use('/url', urlRouter);
 app.listen(8082, async () => {
     console.log('Server is running at port 8084.')
-    await mongoose.connect('mongodb://127.0.0.1/urlShortener');
+    await mongoose.connect('mongodb://localhost:27017/urlShortener');
     console.log('Connected to mongodb.')
 })

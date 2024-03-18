@@ -7,14 +7,11 @@ export const createUrlHandler = async (req: express.Request, res: express.Respon
         if (!originalUrl) {
             return res.status(400).send({message: 'Please provide a url'})
         }
-        const creating = await shortenUrl({
-            originalUrl,
-            shortUrl: ''
-        })
-        if (!creating) {
-            return res.status(400).send({message: 'Could not generate a shorter url'})
+        const { shortUrl } = await shortenUrl({ originalUrl});
+        if (!shortUrl) {
+            return res.status(400).send({ message: 'Could not generate a shorter URL' });
         }
-        return res.status(200).send({message: 'Successfully genedrated a short id.'})
+        return res.status(200).send({ shortUrl });
     }
     catch (err) {
         console.log(err, 'invalid err');
@@ -26,11 +23,12 @@ export const getOriginalUrlHandler = async (req: express.Request, res: express.R
     const {shortUrl} = req.params;
     try {
         const originalUrl = await original(shortUrl)
-        if (shortUrl) {
-            return res.redirect(originalUrl);
+        if (originalUrl) {
+            return res.send(originalUrl);
           } else {
             return res.status(400).send({message: 'Could not get the original url.'})
           }
+      
     }
     catch (err) {
         console.log(err, 'invalid err');

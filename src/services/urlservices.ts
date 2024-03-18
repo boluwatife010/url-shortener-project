@@ -9,11 +9,11 @@ export const shortenUrl = async (body: shortUrlRequestBody): Promise<any> => {
         throw new Error ('Please provide a valid url.');
     }
     const shorts = shortid.generate()
-    const shortened =await urlModel.create({originalUrl, shorts});
+    const shortened =await urlModel.create({originalUrl, shortUrl:shorts});
     if (!shortened) {
         throw new Error ('Could not generate url')
     }
-    await shortened.save();
+    // await shortened.save();
     return shortened;
 }
 // Service function to get the original url
